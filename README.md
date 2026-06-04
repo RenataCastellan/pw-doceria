@@ -1,22 +1,67 @@
-# Projeto Web II
+<div align="center">
 
-## Descrição
-Sistema desenvolvido para a disciplina de Programação Web II.
+<img src="logo.png" alt="Encanto Doceria" width="300"/>
 
-## Objetivo
+# 🍰 Encanto Doceria
 
-O sistema Encanto Doceria é um cardápio digital interativo desenvolvido para modernizar e facilitar a experiência de compra de produtos oferecidos por uma doceria artesanal. A plataforma permite que o cliente acesse o catálogo de produtos de forma intuitiva, visualize descrições, preços e imagens, e realize seus pedidos de maneira ágil e prática.
-O cliente navega pelos itens disponíveis, adiciona produtos ao carrinho de compras, informa seus dados para entrega e seleciona a forma de pagamento (PIX, cartão ou dinheiro). A finalização do pedido é integrada ao WhatsApp da doceria, possibilitando comunicação direta e rápida com o estabelecimento.
-O sistema conta com uma área administrativa, acessível apenas por administradores autenticados, onde é possível cadastrar, editar e excluir produtos do cardápio.
-Principais características do sistema:
+### Doces Gourmet Feitos com Amor
 
-* Interface intuitiva e responsiva para dispositivos móveis e desktop
-* Cardápio digital com listagem de produtos por categoria
-* Carrinho de compras com controle de quantidade e cálculo automático
-* Integração com WhatsApp para envio do resumo do pedido
-* Painel administrativo seguro para gestão do cardápio
+</div>
 
-## Integrantes
+---
 
-- Rafaela Pereira da Silva
-- Renata Lima Lopes Castellan
+## 📖 Descrição
+
+Sistema desenvolvido para a disciplina de **Programação Web II**.
+
+O **Encanto Doceria** é um cardápio digital interativo criado para modernizar e facilitar a experiência de compra dos clientes, oferecendo praticidade, organização e comunicação direta com a doceria.
+
+---
+
+## 🎯 Objetivo
+
+Desenvolver uma aplicação web que permita aos clientes:
+
+* Visualizar o catálogo de produtos;
+* Consultar descrições, preços e imagens;
+* Adicionar produtos ao carrinho;
+* Informar dados para entrega;
+* Escolher a forma de pagamento;
+* Finalizar pedidos através do WhatsApp.
+
+---
+
+## ✨ Funcionalidades
+
+* 📱 Interface responsiva para celular e computador;
+* 🍩 Cardápio digital organizado por categorias;
+* 🛒 Carrinho de compras com cálculo automático;
+* 📲 Integração com WhatsApp;
+* 🔐 Área administrativa para gerenciamento dos produtos;
+* ➕ Cadastro, edição e exclusão de produtos.
+
+---
+
+## 👩‍💻 Integrantes
+
+* Rafaela Pereira da Silva
+* Renata Lima Lopes Castellan
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+* Node.js
+* Express
+* EJS
+* HTML5
+* CSS3
+* JavaScript
+
+---
+
+<div align="center">
+
+💖 Feito com amor pela equipe Encanto Doceria 💖
+
+</div>
