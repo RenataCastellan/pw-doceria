@@ -65,3 +65,5 @@ Desenvolver uma aplicação web que permita aos clientes:
 💖 Feito com amor pela equipe Encanto Doceria 💖
 
 </div>
+
+Telefone : 69993582354
