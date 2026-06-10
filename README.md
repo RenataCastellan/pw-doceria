@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.png" alt="Encanto Doceria" width="300"/>
+<img src="public\css\images\logo.png" alt="Encanto Doceria" width="300"/>
 
 # 🍰 Encanto Doceria
 
