@@ -1,5 +1,28 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+}
+
+header{
+    background:#ff69b4;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:10px;
+}
+
+.banner{
+    text-align:center;
+    padding:80px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
 }
