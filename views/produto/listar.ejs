@@ -1,7 +1,37 @@
 <%- include('../layouts/header') %>
 
-<h1>Produtos</h1>
+<h1>🍰 Produtos Cadastrados</h1>
 
-<p>Cardápio em construção.</p>
+<div class="produtos">
+
+    <% produtos.forEach(produto => { %>
+
+        <div class="produto">
+
+            <h3><%= produto.nome %></h3>
+
+            <p>
+                <%= produto.descricao %>
+            </p>
+
+            <p>
+                R$ <%= produto.preco %>
+            </p>
+
+            <a href="/produtos/editar/<%= produto.id %>">
+                Editar
+            </a>
+
+            |
+
+            <a href="/produtos/excluir/<%= produto.id %>">
+                Excluir
+            </a>
+
+        </div>
+
+    <% }) %>
+
+</div>
 
 <%- include('../layouts/footer') %>
