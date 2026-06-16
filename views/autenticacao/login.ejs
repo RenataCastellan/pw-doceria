@@ -1,7 +1,25 @@
-<form>
-    <input type="email" placeholder="E-mail">
+<%- include('../layouts/header') %>
 
-    <input type="password" placeholder="Senha">
+<h1>Login</h1>
 
-    <button>Entrar</button>
+<form action="/login" method="POST">
+
+    <label>E-mail</label>
+    <br>
+    <input type="email" name="email" required>
+
+    <br><br>
+
+    <label>Senha</label>
+    <br>
+    <input type="password" name="senha" required>
+
+    <br><br>
+
+    <button type="submit">
+        Entrar
+    </button>
+
 </form>
+
+<%- include('../layouts/footer') %>

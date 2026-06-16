@@ -7,7 +7,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.render('inicial');
+    res.render('autenticacao/login');
 });
 
 app.listen(3000, () => {
@@ -105,4 +105,62 @@ app.post('/produtos/editar/:id', (req, res) => {
         }
     );
 
+});
+app.get('/produtos/excluir/:id', (req, res) => {
+
+    const id = req.params.id;
+
+    db.query(
+        'DELETE FROM produtos WHERE id = ?',
+        [id],
+        (erro) => {
+
+            if (erro) {
+                console.log(erro);
+                return res.send('Erro ao excluir produto');
+            }
+
+            res.redirect('/produtos');
+        }
+    );
+
+});
+
+app.post('/login', (req, res) => {
+
+    const { email, senha } = req.body;
+
+    db.query(
+        'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
+        [email, senha],
+        (erro, resultado) => {
+
+            if (erro) {
+                console.log(erro);
+                return res.send('Erro');
+            }
+
+            if (resultado.length === 0) {
+                return res.send('Usuário ou senha inválidos');
+            }
+
+            const usuario = resultado[0];
+
+            if (usuario.tipo === 'funcionario') {
+                return res.redirect('/produtos');
+            }
+
+            return res.redirect('/cardapio');
+
+        }
+    );
+
+});
+
+app.get('/cardapio', (req, res) => {
+    res.render('cliente/cardapio');
+});
+
+app.get('/painel', (req, res) => {
+    res.render('administrador/painel');
 });
