@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS item_carrinho (
 
 -- Admin padrão (senha: admin123)
 INSERT INTO administrador (login, senha)
-VALUES ('admin@encantodoceria.com', '$2b$10$Yv1nVILy.UNaOgEMsMqlzuXjNn3z/5P7w1k7C4eT.VWm3JfRb1WUG');
+VALUES ('admin@encantodoceria.com', '$2b$10$FevYgnY3xs4YTS4ClpJMmeYL3CQQajUxcBNao6D72YTWbSOZshpMy');
 
 -- Produtos de exemplo
 INSERT INTO produto (nome, descricao, preco, categoria, estoque, ativo, id_admin) VALUES
