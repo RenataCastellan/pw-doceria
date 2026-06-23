@@ -25,6 +25,7 @@ router.post('/login', (req, res) => {
 
             if (resultado.length > 0) {
                 const admin = resultado[0];
+                
                 const senhaCorreta = await bcrypt.compare(senha, admin.senha);
 
                 if (senhaCorreta) {
