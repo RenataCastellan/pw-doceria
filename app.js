@@ -1,166 +1,62 @@
+require('dotenv').config();
+
 const express = require('express');
+const session = require('express-session');
+const path    = require('path');
+
 const app = express();
-const db = require('./src/config/database');
+const db  = require('./src/config/database');
 
+// Rotas
+const autenticacaoRoutes = require('./src/routes/autenticacao');
+const produtoRoutes      = require('./src/routes/produto');
+const carrinhoRoutes     = require('./src/routes/carrinho');
+const clienteRoutes      = require('./src/routes/cliente');
+const pedidoRoutes       = require('./src/routes/pedido');
+
+// Configurações gerais
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.render('autenticacao/login');
+// Sessão
+app.use(session({
+    secret: 'encanto-doceria-secret-2026',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }
+}));
+
+// Variáveis globais para as views
+app.use((req, res, next) => {
+    res.locals.usuarioLogado = req.session.usuario || null;
+    res.locals.adminLogado   = req.session.admin   || null;
+    res.locals.carrinho      = req.session.carrinho || [];
+    next();
 });
 
-app.listen(3000, () => {
-    console.log('Servidor rodando em http://localhost:3000');
-});
+// Registrar rotas
+app.use('/',         autenticacaoRoutes);
+app.use('/produtos', produtoRoutes);
+app.use('/carrinho', carrinhoRoutes);
+app.use('/cliente',  clienteRoutes);
+app.use('/pedido',   pedidoRoutes);
 
-app.get('/login', (req,res)=>{
-    res.render('autenticacao/login');
-});
-
-app.get('/produtos', (req, res) => {
-
-    db.query('SELECT * FROM produtos', (erro, resultados) => {
-
-        if (erro) {
-            console.log(erro);
-            return res.send('Erro ao buscar produtos');
-        }
-
-        res.render('produto/listar', {
-            produtos: resultados
-        });
-
-    });
-
-});
-
-app.get('/produtos/cadastrar', (req, res) => {
-    res.render('produto/cadastrar');
-});
-
-app.post('/produtos/cadastrar', (req, res) => {
-
-    const { nome, descricao, preco } = req.body;
-
-    const sql = `
-        INSERT INTO produtos (nome, descricao, preco)
-        VALUES (?, ?, ?)
-    `;
-
-    db.query(sql, [nome, descricao, preco], (erro) => {
-
-        if (erro) {
-            console.log(erro);
-            return res.send('Erro ao salvar produto');
-        }
-
-        res.redirect('/produtos');
-    });
-
-});
-
-app.get('/produtos/editar/:id', (req, res) => {
-
-    const id = req.params.id;
-
-    db.query(
-        'SELECT * FROM produtos WHERE id = ?',
-        [id],
-        (erro, resultado) => {
-
-            if (erro) {
-                console.log(erro);
-                return res.send('Erro');
-            }
-
-            res.render('produto/editar', {
-                produto: resultado[0]
-            });
-
-        }
-    );
-
-});
-
-app.post('/produtos/editar/:id', (req, res) => {
-
-    const id = req.params.id;
-
-    const { nome, descricao, preco } = req.body;
-
-    db.query(
-        `UPDATE produtos
-         SET nome = ?, descricao = ?, preco = ?
-         WHERE id = ?`,
-        [nome, descricao, preco, id],
-        (erro) => {
-
-            if (erro) {
-                console.log(erro);
-                return res.send('Erro ao atualizar');
-            }
-
-            res.redirect('/produtos');
-        }
-    );
-
-});
-app.get('/produtos/excluir/:id', (req, res) => {
-
-    const id = req.params.id;
-
-    db.query(
-        'DELETE FROM produtos WHERE id = ?',
-        [id],
-        (erro) => {
-
-            if (erro) {
-                console.log(erro);
-                return res.send('Erro ao excluir produto');
-            }
-
-            res.redirect('/produtos');
-        }
-    );
-
-});
-
-app.post('/login', (req, res) => {
-
-    const { email, senha } = req.body;
-
-    db.query(
-        'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
-        [email, senha],
-        (erro, resultado) => {
-
-            if (erro) {
-                console.log(erro);
-                return res.send('Erro');
-            }
-
-            if (resultado.length === 0) {
-                return res.send('Usuário ou senha inválidos');
-            }
-
-            const usuario = resultado[0];
-
-            if (usuario.tipo === 'funcionario') {
-                return res.redirect('/produtos');
-            }
-
-            return res.redirect('/cardapio');
-
-        }
-    );
-
-});
-
-app.get('/cardapio', (req, res) => {
-    res.render('cliente/cardapio');
+// Páginas simples
+app.get('/sobre', (req, res) => {
+    res.render('sobre');
 });
 
 app.get('/painel', (req, res) => {
+    if (!req.session.admin) return res.redirect('/login');
     res.render('administrador/painel');
+});
+
+// Servidor
+const PORTA = process.env.PORT || 3000;
+app.listen(PORTA, () => {
+    console.log(`Servidor rodando em http://localhost:${PORTA}`);
 });

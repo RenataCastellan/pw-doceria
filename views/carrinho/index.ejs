@@ -1,0 +1,73 @@
+<%- include('../layouts/header') %>
+
+<div class="pagina-carrinho">
+    <h1>🛒 Carrinho</h1>
+
+    <% if (carrinho.length === 0) { %>
+        <div class="carrinho-vazio">
+            <p>Seu carrinho está vazio.</p>
+            <a href="/cardapio" class="btn-primario">Ver Cardápio</a>
+        </div>
+
+    <% } else { %>
+
+        <div class="itens-carrinho">
+            <% carrinho.forEach(item => { %>
+
+                <div class="item-carrinho">
+                    <% if (item.imagem) { %>
+                        <img src="<%= item.imagem %>" alt="<%= item.nome %>" class="item-img">
+                    <% } else { %>
+                        <div class="item-img-placeholder">🍬</div>
+                    <% } %>
+
+                    <div class="item-info">
+                        <h3><%= item.nome %></h3>
+                        <p>R$ <%= parseFloat(item.preco).toFixed(2).replace('.', ',') %> cada</p>
+                    </div>
+
+                    <div class="item-controles">
+                        <form action="/carrinho/quantidade" method="POST" style="display:inline">
+                            <input type="hidden" name="id_produto" value="<%= item.id_produto %>">
+                            <input type="hidden" name="acao" value="diminuir">
+                            <button type="submit" class="btn-qtd">−</button>
+                        </form>
+
+                        <span class="qtd-valor"><%= item.quantidade %></span>
+
+                        <form action="/carrinho/quantidade" method="POST" style="display:inline">
+                            <input type="hidden" name="id_produto" value="<%= item.id_produto %>">
+                            <input type="hidden" name="acao" value="aumentar">
+                            <button type="submit" class="btn-qtd">+</button>
+                        </form>
+                    </div>
+
+                    <div class="item-subtotal">
+                        R$ <%= parseFloat(item.subtotal).toFixed(2).replace('.', ',') %>
+                    </div>
+
+                    <form action="/carrinho/remover" method="POST">
+                        <input type="hidden" name="id_produto" value="<%= item.id_produto %>">
+                        <button type="submit" class="btn-remover">✕</button>
+                    </form>
+                </div>
+
+            <% }) %>
+        </div>
+
+        <div class="carrinho-total">
+            <strong>Total: R$ <%= parseFloat(total).toFixed(2).replace('.', ',') %></strong>
+        </div>
+
+        <div class="carrinho-acoes">
+            <form action="/carrinho/limpar" method="POST" style="display:inline">
+                <button type="submit" class="btn-secundario">Limpar Carrinho</button>
+            </form>
+
+            <a href="/pedido/finalizar" class="btn-primario">Finalizar Pedido</a>
+        </div>
+
+    <% } %>
+</div>
+
+<%- include('../layouts/footer') %>

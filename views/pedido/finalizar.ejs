@@ -1,0 +1,124 @@
+<%- include('../layouts/header') %>
+
+<div class="pagina-finalizar">
+    <h1>Finalizar Pedido</h1>
+
+    <% if (erro) { %>
+        <div class="alerta alerta-erro"><%= erro %></div>
+    <% } %>
+
+    <form action="/pedido/finalizar" method="POST">
+
+        <section class="secao-resumo">
+            <h2>Resumo do Pedido</h2>
+            <% carrinho.forEach(item => { %>
+                <div class="resumo-item">
+                    <span><%= item.nome %> x<%= item.quantidade %></span>
+                    <span>R$ <%= parseFloat(item.subtotal).toFixed(2).replace('.', ',') %></span>
+                </div>
+            <% }) %>
+            <div class="resumo-total">
+                <strong>Total: R$ <%= parseFloat(total).toFixed(2).replace('.', ',') %></strong>
+            </div>
+        </section>
+
+        <section class="secao-endereco">
+            <h2>Endereço de Entrega</h2>
+
+            <div class="campo">
+                <label>Rua / Logradouro <span class="obrigatorio">*</span></label>
+                <input type="text" name="rua" required placeholder="Nome da rua ou avenida">
+            </div>
+
+            <div class="campo-linha">
+                <div class="campo">
+                    <label>Número <span class="obrigatorio">*</span></label>
+                    <input type="text" name="numero" required placeholder="123">
+                </div>
+                <div class="campo">
+                    <label>Complemento</label>
+                    <input type="text" name="complemento" placeholder="Apto, bloco...">
+                </div>
+            </div>
+
+            <div class="campo">
+                <label>Bairro <span class="obrigatorio">*</span></label>
+                <input type="text" name="bairro" required placeholder="Bairro">
+            </div>
+
+            <div class="campo-linha">
+                <div class="campo">
+                    <label>Cidade <span class="obrigatorio">*</span></label>
+                    <input type="text" name="cidade" required placeholder="Cidade">
+                </div>
+                <div class="campo">
+                    <label>Estado <span class="obrigatorio">*</span></label>
+                    <select name="estado" required>
+                        <option value="">UF</option>
+                        <option value="RO">RO</option>
+                        <option value="AC">AC</option>
+                        <option value="AM">AM</option>
+                        <option value="RR">RR</option>
+                        <option value="PA">PA</option>
+                        <option value="AP">AP</option>
+                        <option value="TO">TO</option>
+                        <option value="MA">MA</option>
+                        <option value="PI">PI</option>
+                        <option value="CE">CE</option>
+                        <option value="RN">RN</option>
+                        <option value="PB">PB</option>
+                        <option value="PE">PE</option>
+                        <option value="AL">AL</option>
+                        <option value="SE">SE</option>
+                        <option value="BA">BA</option>
+                        <option value="MG">MG</option>
+                        <option value="ES">ES</option>
+                        <option value="RJ">RJ</option>
+                        <option value="SP">SP</option>
+                        <option value="PR">PR</option>
+                        <option value="SC">SC</option>
+                        <option value="RS">RS</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="GO">GO</option>
+                        <option value="DF">DF</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>CEP</label>
+                    <input type="text" name="cep" placeholder="00000-000">
+                </div>
+            </div>
+        </section>
+
+        <section class="secao-pagamento">
+            <h2>Forma de Pagamento</h2>
+
+            <div class="opcoes-pagamento">
+                <label class="opcao-pag">
+                    <input type="radio" name="pagamento" value="PIX" required>
+                    <span>💠 PIX</span>
+                </label>
+                <label class="opcao-pag">
+                    <input type="radio" name="pagamento" value="Cartão de Crédito">
+                    <span>💳 Cartão de Crédito</span>
+                </label>
+                <label class="opcao-pag">
+                    <input type="radio" name="pagamento" value="Cartão de Débito">
+                    <span>💳 Cartão de Débito</span>
+                </label>
+                <label class="opcao-pag">
+                    <input type="radio" name="pagamento" value="Dinheiro">
+                    <span>💵 Dinheiro</span>
+                </label>
+            </div>
+        </section>
+
+        <button type="submit" class="btn-whatsapp">
+            Enviar Pedido pelo WhatsApp 📱
+        </button>
+
+    </form>
+</div>
+
+<%- include('../layouts/footer') %>

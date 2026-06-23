@@ -1,10 +1,21 @@
 <%- include('../layouts/header') %>
 
-<h1>Painel Administrativo</h1>
+<div class="pagina-admin">
+    <h1>Painel Administrativo</h1>
+    <p>Bem-vindo, <strong><%= adminLogado.login %></strong>!</p>
 
-<ul>
-    <li><a href="/produtos">Gerenciar Produtos</a></li>
-    <li><a href="/produtos/cadastrar">Cadastrar Produto</a></li>
-</ul>
+    <div class="grade-admin">
+        <a href="/produtos" class="card-admin">
+            <span class="card-icone">🍬</span>
+            <h3>Gerenciar Produtos</h3>
+            <p>Listar, cadastrar, editar e excluir produtos do cardápio</p>
+        </a>
+        <a href="/produtos/cadastrar" class="card-admin">
+            <span class="card-icone">➕</span>
+            <h3>Novo Produto</h3>
+            <p>Adicionar um novo item ao cardápio</p>
+        </a>
+    </div>
+</div>
 
 <%- include('../layouts/footer') %>

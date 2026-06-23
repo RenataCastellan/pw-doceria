@@ -1,0 +1,19 @@
+<%- include('../layouts/header') %>
+
+<div class="form-container">
+    <h1>Excluir Produto</h1>
+
+    <div class="alerta alerta-aviso">
+        Tem certeza que deseja excluir o produto <strong><%= produto.nome %></strong>?
+        Esta ação não pode ser desfeita.
+    </div>
+
+    <div class="botoes">
+        <form action="/produtos/excluir/<%= produto.id_produto %>" method="POST" style="display:inline">
+            <button type="submit" class="btn-excluir">Sim, excluir</button>
+        </form>
+        <a href="/produtos" class="btn-secundario">Cancelar</a>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

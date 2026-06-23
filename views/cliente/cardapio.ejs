@@ -1,7 +1,54 @@
-<%- include('layouts/header') %>
+<%- include('../layouts/header') %>
 
-<h1>Cardápio da Encanto Doceria</h1>
+<div class="pagina-cardapio">
+    <h1>🍰 Cardápio</h1>
+    <p class="subtitulo">Doces artesanais feitos com amor e ingredientes selecionados</p>
 
-<p>Bem-vindo ao sistema!</p>
+    <% if (produtos.length === 0) { %>
+        <p class="sem-produtos">Nenhum produto disponível no momento.</p>
 
-<%- include('layouts/footer') %>
+    <% } else { %>
+
+        <%
+            const categorias = [...new Set(produtos.map(p => p.categoria))];
+        %>
+
+        <% categorias.forEach(cat => { %>
+            <section class="categoria-secao">
+                <h2 class="categoria-titulo"><%= cat %></h2>
+
+                <div class="grade-produtos">
+                    <% produtos.filter(p => p.categoria === cat).forEach(produto => { %>
+
+                        <div class="card-produto">
+                            <% if (produto.imagem) { %>
+                                <img src="<%= produto.imagem %>" alt="<%= produto.nome %>" class="produto-img">
+                            <% } else { %>
+                                <div class="produto-img-placeholder">🍬</div>
+                            <% } %>
+
+                            <div class="card-info">
+                                <h3><%= produto.nome %></h3>
+                                <p class="descricao"><%= produto.descricao || '' %></p>
+                                <p class="preco">R$ <%= parseFloat(produto.preco).toFixed(2).replace('.', ',') %></p>
+
+                                <form action="/carrinho/adicionar" method="POST">
+                                    <input type="hidden" name="id_produto" value="<%= produto.id_produto %>">
+                                    <div class="controle-qtd">
+                                        <label>Qtd:</label>
+                                        <input type="number" name="quantidade" value="1" min="1" max="99">
+                                    </div>
+                                    <button type="submit" class="btn-adicionar">Adicionar ao Carrinho</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    <% }) %>
+                </div>
+            </section>
+        <% }) %>
+
+    <% } %>
+</div>
+
+<%- include('../layouts/footer') %>

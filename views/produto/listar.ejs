@@ -1,37 +1,52 @@
 <%- include('../layouts/header') %>
 
-<h1>🍰 Produtos Cadastrados</h1>
+<div class="pagina-admin">
+    <div class="cabecalho-admin">
+        <h1>Produtos Cadastrados</h1>
+        <a href="/produtos/cadastrar" class="btn-primario">+ Novo Produto</a>
+    </div>
 
-<div class="produtos">
+    <% if (sucesso === 'cadastrado') { %>
+        <div class="alerta alerta-sucesso">Produto cadastrado com sucesso!</div>
+    <% } else if (sucesso === 'editado') { %>
+        <div class="alerta alerta-sucesso">Produto atualizado com sucesso!</div>
+    <% } else if (sucesso === 'excluido') { %>
+        <div class="alerta alerta-sucesso">Produto excluído com sucesso!</div>
+    <% } %>
 
-    <% produtos.forEach(produto => { %>
-
-        <div class="produto">
-
-            <h3><%= produto.nome %></h3>
-
-            <p>
-                <%= produto.descricao %>
-            </p>
-
-            <p>
-                R$ <%= produto.preco %>
-            </p>
-
-            <a href="/produtos/editar/<%= produto.id %>">
-                Editar
-            </a>
-
-            |
-
-            <a href="/produtos/excluir/<%= produto.id %>">
-                Excluir
-            </a>
-
-        </div>
-
-    <% }) %>
-
+    <% if (produtos.length === 0) { %>
+        <p>Nenhum produto cadastrado ainda.</p>
+    <% } else { %>
+        <table class="tabela-admin">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ativo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% produtos.forEach(produto => { %>
+                <tr>
+                    <td><%= produto.id_produto %></td>
+                    <td><%= produto.nome %></td>
+                    <td><%= produto.categoria %></td>
+                    <td>R$ <%= parseFloat(produto.preco).toFixed(2).replace('.', ',') %></td>
+                    <td><%= produto.estoque %></td>
+                    <td><%= produto.ativo ? '✅' : '❌' %></td>
+                    <td class="acoes">
+                        <a href="/produtos/editar/<%= produto.id_produto %>" class="btn-editar">Editar</a>
+                        <a href="/produtos/excluir/<%= produto.id_produto %>" class="btn-excluir">Excluir</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
 </div>
 
 <%- include('../layouts/footer') %>

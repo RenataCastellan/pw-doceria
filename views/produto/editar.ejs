@@ -1,39 +1,63 @@
 <%- include('../layouts/header') %>
 
-<h1>Editar Produto</h1>
+<div class="form-container">
+    <h1>Editar Produto</h1>
 
-<form action="/produtos/editar/<%= produto.id %>" method="POST">
+    <% if (erro) { %>
+        <div class="alerta alerta-erro"><%= erro %></div>
+    <% } %>
 
-    <label>Nome do Produto</label>
-    <br>
-    <input
-        type="text"
-        name="nome"
-        value="<%= produto.nome %>"
-        required
-    >
-    <br><br>
+    <form action="/produtos/editar/<%= produto.id_produto %>" method="POST">
 
-    <label>Descrição</label>
-    <br>
-    <textarea name="descricao"><%= produto.descricao %></textarea>
-    <br><br>
+        <div class="campo">
+            <label>Nome <span class="obrigatorio">*</span></label>
+            <input type="text" name="nome" value="<%= produto.nome %>" required>
+        </div>
 
-    <label>Preço</label>
-    <br>
-    <input
-        type="number"
-        step="0.01"
-        name="preco"
-        value="<%= produto.preco %>"
-        required
-    >
-    <br><br>
+        <div class="campo">
+            <label>Descrição</label>
+            <textarea name="descricao"><%= produto.descricao || '' %></textarea>
+        </div>
 
-    <button type="submit">
-        Atualizar Produto
-    </button>
+        <div class="campo-linha">
+            <div class="campo">
+                <label>Preço (R$) <span class="obrigatorio">*</span></label>
+                <input type="number" step="0.01" min="0" name="preco" value="<%= produto.preco %>" required>
+            </div>
+            <div class="campo">
+                <label>Estoque</label>
+                <input type="number" min="0" name="estoque" value="<%= produto.estoque %>">
+            </div>
+        </div>
 
-</form>
+        <div class="campo">
+            <label>Categoria <span class="obrigatorio">*</span></label>
+            <select name="categoria" required>
+                <option value="">Selecione...</option>
+                <% ['Doces Finos','Trufas','Bolos','Tortas','Outros'].forEach(cat => { %>
+                    <option value="<%= cat %>" <%= produto.categoria === cat ? 'selected' : '' %>><%= cat %></option>
+                <% }) %>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>URL da Imagem</label>
+            <input type="text" name="imagem" value="<%= produto.imagem || '' %>">
+        </div>
+
+        <div class="campo checkbox">
+            <label>
+                <input type="checkbox" name="ativo" <%= produto.ativo ? 'checked' : '' %>>
+                Produto ativo (visível no cardápio)
+            </label>
+        </div>
+
+        <div class="botoes">
+            <button type="submit" class="btn-primario">Atualizar Produto</button>
+            <a href="/produtos" class="btn-secundario">Cancelar</a>
+        </div>
+
+    </form>
+</div>
 
 <%- include('../layouts/footer') %>
